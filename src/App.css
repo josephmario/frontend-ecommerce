@@ -1,0 +1,31 @@
+.btn-maroon, .btn-maroon:hover, .btn-maroon:active, .btn-maroon:visited {
+    background-color: #670032 !important;
+    border-color: #670032 !important;
+}
+
+
+.app__body {
+    display:flex;
+    height: 100vh;
+}
+
+body {
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
+/* font-weight: 300; */
+}
+
+/* @font-face {
+font-family: "Helvetica Neue";
+src: url("../fonts/Helvetica-Neue-Interface/Helvetica-Neue-Interface/HelveticaNeueLTStd-Roman.otf");
+} */
+
+@font-face {
+font-family: "Helvetica Medium";
+src: url("./fonts/helveticaneue/HelveticaNeueMed.ttf");
+}
+
+@font-face {
+font-family: "Helvetica Neue Bold";
+src: url("./fonts/helvetica-neue-9-cufonfonts/Helvetica55Roman_22439.ttf");
+}
+

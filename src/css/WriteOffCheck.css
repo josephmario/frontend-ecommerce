@@ -1,0 +1,24 @@
+.border-date-range-left{
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+}
+
+.border-date-range-right{
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+}
+
+.btnSearch{
+    position: absolute !important;
+    margin-left: 8px !important; 
+    margin-top: -16px !important;
+}
+
+.btnExit{
+    margin-left: -48px !important; 
+    z-index: 100 !important;
+}
+
+.btnExport{
+    border-radius: 6px !important
+}

@@ -1,0 +1,13 @@
+.navbar-light .navbar-nav .nav-link {
+    color:white !important;
+}
+
+.navbar-light .navbar-brand {
+    color:white !important;
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    #dropdown-customize-menu {
+        margin-left:0px !important;
+    }
+}

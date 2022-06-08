@@ -1,0 +1,15 @@
+.__Bank {
+    margin-top:20px;
+    width: 100%;
+}
+
+#__bank_Card {
+    flex:1
+}
+
+thead {
+    background-color:#670032;
+    color:white;
+}
+
+/* comment to check react-csv error */

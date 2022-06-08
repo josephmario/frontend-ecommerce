@@ -1,0 +1,29 @@
+.__Login {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+#container {
+    position: relative;
+}
+
+.bottom-right {
+    position: absolute;
+    top: 16%;
+    right: 17%;
+}
+
+.EmailInp .ant-input {
+    font-size:18px !important;
+}
+
+.passwordInp .ant-input {
+    font-size:18px !important;
+}
