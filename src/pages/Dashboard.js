@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 function Dashboard() {
     const history = useHistory();
     const [customer, setCustomer] = useState([]);
-
+    console.log(customer)
     //Product
     const [searchInputProduct, setsearchInputProduct] = useState('')
     const [searchTextProduct, setsearchTextProduct] = useState('')
@@ -19,6 +19,11 @@ function Dashboard() {
     const [searchInputStatus, setsearchInputStatus] = useState('')
     const [searchTextStatus, setsearchTextStatus] = useState('')
     const [searchedColumnStatus, setsearchedColumnStatus] = useState('')
+
+    //OrderNum
+    const [searchInputOrderNum, setsearchInputOrderNum] = useState('')
+    const [searchTextOrderNum, setsearchTextOrderNum] = useState('')
+    const [searchedColumnOrderNum, setsearchedColumnOrderNum] = useState('')
 
     useEffect(() => {
         const list_order = process.env.REACT_APP_ECOMMERCE_SECRET_BASEURL + "order"
@@ -35,11 +40,6 @@ function Dashboard() {
         setsearchedColumnProduct('full_name')
     }
 
-    const handleResetProduct = clearFilters => {
-        clearFilters();
-        setsearchTextProduct('')
-    };
-
     //Status
     const handleSearchStatus = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -47,12 +47,61 @@ function Dashboard() {
         setsearchedColumnStatus('status')
     }
 
-    const handleResetStatus = clearFilters => {
-        clearFilters();
-        setsearchTextStatus('')
-    };
+    //OrderNum
+    const handleSearchOrderNum = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setsearchTextOrderNum(selectedKeys[0])
+        setsearchedColumnOrderNum('order_number')
+    }
 
     const columnsSelected = [
+        {
+            title: "Order Number",
+            dataIndex: 'order_number',
+            key: 'order_number',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+                <div style={{ padding: 8 }}>
+                    <Input
+                        ref={node => {
+                            setsearchInputOrderNum(node);
+                        }}
+                        placeholder={'Search Order Number'}
+                        style={{ width: 188, marginBottom: 8, display: 'block' }}
+                        onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                        onPressEnter={() => handleSearchOrderNum(selectedKeys, confirm, 'order_number')}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            icon={<SearchOutlined />}
+                            size="small"
+                            style={{ width: 90 }}
+                            onClick={() => handleSearchOrderNum(selectedKeys, confirm, 'order_number')}
+                        >
+                            Search
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+            onFilter: (value, record) => (record['order_number']) ? record['order_number'].toString().toLowerCase().includes(value.toLowerCase()) : '',
+            onFilterDropdownVisibleChange: visible =>{
+                if(visible) {
+                    setTimeout(() => searchInputOrderNum, 100);
+                }
+            },
+            render: text =>
+                searchedColumnOrderNum === 'order_number' ? (
+                    <Highlighter
+                        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                        searchWords={[searchTextOrderNum]}
+                        autoEscape
+                        textToHighlight={text ? text.toString() : ''}
+                    />
+                ) : (
+                    text
+                ),
+        },
         {
             title: "Name",
             dataIndex: 'name',
@@ -83,9 +132,6 @@ function Dashboard() {
                             onClick={() => handleSearchProduct(selectedKeys, confirm, 'product_name')}
                         >
                             Search
-                        </Button>
-                        <Button size="small" style={{ width: 90 }} onClick={() => handleResetProduct(clearFilters)}>
-                            Reset
                         </Button>
                     </Space>
                 </div>
@@ -141,9 +187,6 @@ function Dashboard() {
                             onClick={() => handleSearchStatus(selectedKeys, confirm, 'status')}
                         >
                             Search
-                        </Button>
-                        <Button size="small" style={{ width: 90 }} onClick={() => handleResetStatus(clearFilters)}>
-                            Reset
                         </Button>
                     </Space>
                 </div>
