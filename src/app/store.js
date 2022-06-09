@@ -8,10 +8,10 @@ const userDataPersistConfig = {
   storage: storage,
 };
 
-const receiveDataPersis = {
-    key: 'receive_data',
-    storage: storage,
-};
+// const receiveDataPersis = {
+//     key: 'receive_data',
+//     storage: storage,
+// };
 
 export default configureStore({
     reducer: {

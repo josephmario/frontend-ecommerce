@@ -1,12 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import '../css/Dashboard.css';
-import { Table, Button, Space, message } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { Table, Button, Space, message, Input } from 'antd';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import Highlighter from 'react-highlight-words';
 
 function Dashboard() {
     const history = useHistory();
     const [customer, setCustomer] = useState([]);
+
+    //Product
+    const [searchInputProduct, setsearchInputProduct] = useState('')
+    const [searchTextProduct, setsearchTextProduct] = useState('')
+    const [searchedColumnProduct, setsearchedColumnProduct] = useState('')
+    
+    //Status
+    const [searchInputStatus, setsearchInputStatus] = useState('')
+    const [searchTextStatus, setsearchTextStatus] = useState('')
+    const [searchedColumnStatus, setsearchedColumnStatus] = useState('')
+
     useEffect(() => {
         const list_order = process.env.REACT_APP_ECOMMERCE_SECRET_BASEURL + "order"
         axios.get(list_order, { headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } })
@@ -15,7 +28,30 @@ function Dashboard() {
         });
     }, [])
 
-    
+    //Product
+    const handleSearchProduct = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setsearchTextProduct(selectedKeys[0])
+        setsearchedColumnProduct('full_name')
+    }
+
+    const handleResetProduct = clearFilters => {
+        clearFilters();
+        setsearchTextProduct('')
+    };
+
+    //Status
+    const handleSearchStatus = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setsearchTextStatus(selectedKeys[0])
+        setsearchedColumnStatus('status')
+    }
+
+    const handleResetStatus = clearFilters => {
+        clearFilters();
+        setsearchTextStatus('')
+    };
+
     const columnsSelected = [
         {
             title: "Name",
@@ -27,6 +63,51 @@ function Dashboard() {
             title: "Product Name",
             dataIndex: 'product_name',
             key: 'product_name',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+                <div style={{ padding: 8 }}>
+                    <Input
+                        ref={node => {
+                            setsearchInputProduct(node);
+                        }}
+                        placeholder={'Search Product Name'}
+                        style={{ width: 188, marginBottom: 8, display: 'block' }}
+                        onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                        onPressEnter={() => handleSearchProduct(selectedKeys, confirm, 'product_name')}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            icon={<SearchOutlined />}
+                            size="small"
+                            style={{ width: 90 }}
+                            onClick={() => handleSearchProduct(selectedKeys, confirm, 'product_name')}
+                        >
+                            Search
+                        </Button>
+                        <Button size="small" style={{ width: 90 }} onClick={() => handleResetProduct(clearFilters)}>
+                            Reset
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+            onFilter: (value, record) => (record['product_name']) ? record['product_name'].toString().toLowerCase().includes(value.toLowerCase()) : '',
+            onFilterDropdownVisibleChange: visible =>{
+                if(visible) {
+                    setTimeout(() => searchInputProduct, 100);
+                }
+            },
+            render: text =>
+                searchedColumnProduct === 'product_name' ? (
+                    <Highlighter
+                        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                        searchWords={[searchTextProduct]}
+                        autoEscape
+                        textToHighlight={text ? text.toString() : ''}
+                    />
+                ) : (
+                    text
+                ),
         },
         {
             title: "Price",
@@ -40,6 +121,51 @@ function Dashboard() {
             title: "Status",
             dataIndex: 'status',
             key: 'status',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+                <div style={{ padding: 8 }}>
+                    <Input
+                        ref={node => {
+                            setsearchInputStatus(node);
+                        }}
+                        placeholder={'Search Status'}
+                        style={{ width: 188, marginBottom: 8, display: 'block' }}
+                        onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                        onPressEnter={() => handleSearchStatus(selectedKeys, confirm, 'status')}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            icon={<SearchOutlined />}
+                            size="small"
+                            style={{ width: 90 }}
+                            onClick={() => handleSearchStatus(selectedKeys, confirm, 'status')}
+                        >
+                            Search
+                        </Button>
+                        <Button size="small" style={{ width: 90 }} onClick={() => handleResetStatus(clearFilters)}>
+                            Reset
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+            onFilter: (value, record) => (record['status']) ? record['status'].toString().toLowerCase().includes(value.toLowerCase()) : '',
+            onFilterDropdownVisibleChange: visible =>{
+                if(visible) {
+                    setTimeout(() => searchInputStatus, 100);
+                }
+            },
+            render: text =>
+                searchedColumnStatus === 'status' ? (
+                    <Highlighter
+                        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                        searchWords={[searchTextStatus]}
+                        autoEscape
+                        textToHighlight={text ? text.toString() : ''}
+                    />
+                ) : (
+                    text
+                ),
         },
         {
             title: "Quantity",

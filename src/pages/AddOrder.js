@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 function AddOrder() {
     const { Option } = Select;
-    const [form] = Form.useForm();
+    // const [form] = Form.useForm();
     const [product, setProduct] = useState([]);
     const history = useHistory();
     useEffect(() => {

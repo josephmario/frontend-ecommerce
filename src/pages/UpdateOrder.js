@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams, useHistory } from 'react-router-dom';
 function UpdateOrder() {
     const { Option } = Select;
-    const [form] = Form.useForm();
+    // const [form] = Form.useForm();
     const [product, setProduct] = useState([]);
     const history = useHistory();
     const { product_name, quantity, order_detail_id } = useParams();
@@ -22,6 +22,7 @@ function UpdateOrder() {
             values.gross_sale = filterProduct.price * Number(values.quantity)
             values.product_id = filterProduct.product_code
         })
+        
         
         const list_order = process.env.REACT_APP_ECOMMERCE_SECRET_BASEURL + `order/${order_detail_id}`
         axios.put(list_order, {
