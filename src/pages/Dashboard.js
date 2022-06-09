@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 function Dashboard() {
     const history = useHistory();
     const [customer, setCustomer] = useState([]);
-    console.log(customer)
+
     //Product
     const [searchInputProduct, setsearchInputProduct] = useState('')
     const [searchTextProduct, setsearchTextProduct] = useState('')
