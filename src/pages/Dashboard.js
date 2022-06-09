@@ -73,8 +73,7 @@ function Dashboard() {
         history.push(`/update_order/${res.product_name}/${res.quantity}/${res.order_detail_id}`);
     }
     const cancelBtn = (res) => {
-        // history.push(`/cancel_order/${res.order_detail_id}`);
-        const list_order = process.env.REACT_APP_ECOMMERCE_SECRET_BASEURL + `order/${res.order_id}`
+        const list_order = process.env.REACT_APP_ECOMMERCE_SECRET_BASEURL + `order_status/${res.order_id}`
         axios.put(list_order, {
             'status': 'Cancelled',
         }, 
